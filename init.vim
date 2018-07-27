@@ -66,7 +66,7 @@ set showcmd                 " show the command in the status line
 " Rechtschreibung & Word Processing: move cursor in editor lines, not text lines
 " change to utf8 umlaut compatible mode with digraphs
 " http://vim.wikia.com/wiki/VimTip38
-function WordProcessor(enable)
+function! WordProcessor(enable)
   if a:enable
     echo "WordProcessor Mode: enabled"
     imap <Up> <C-O>gk
@@ -114,9 +114,6 @@ map   <F6>      :command
 " Make
 map !ma       <ESC>:w<CR>:make<CR>
 
-" Since ctrl-t is bound to commandt / unite / fzf
-let @t = ":pop"
-
 " Search
 map <leader>g     :Ggrep <C-R><C-W><CR>
 
@@ -154,7 +151,6 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-  " FIXME python setup? pip install python-neovim
 endif
 call plug#begin('~/.config/nvim/plugged')
 
@@ -213,15 +209,14 @@ Plug 'tpope/vim-rsi'
 Plug 'vim-scripts/SQLUtilities'
 Plug 'vim-scripts/Align'
 
-" Surround - yse' veS'
-"Plug 'tpope/vim-surround'
+" Surround - sa$' srb" sd"
 Plug 'machakann/vim-sandwich'
 
 " Vim ruby
 " gem install gem-ctags
 Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 Plug 'tpope/vim-rake', { 'for': 'ruby' }
-Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
+Plug 'fatih/vim-go', { 'for': 'go', 'do': 'silent :GoInstallBinaries' }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'janko-m/vim-test'
 
@@ -244,13 +239,13 @@ Plug 'JulesWang/css.vim', { 'for': 'css' }
 Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'mitsuhiko/vim-python-combined', { 'for': 'python' }
 Plug 'vim-scripts/R.vim', { 'for': 'r' }
+Plug 'davinche/godown-vim', { 'for': 'markdown' }
+Plug 'vim-latex/vim-latex', { 'for': 'tex' }
 
 " Git
 Plug 'vim-scripts/fugitive.vim'
 Plug 'airblade/vim-gitgutter'
 
-" Latexsuite = vim-latex
-Plug 'vim-latex/vim-latex', { 'for': 'tex' }
 
 call plug#end()
 
@@ -282,6 +277,9 @@ let g:airline_theme='lucius'
 let g:airline#extensions#branch#enabled = 0
 let g:airline#extensions#tmuxline#enabled = 1
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux.airline.conf"
+
+let g:neomake_warning_sign={'text': '!', 'texthl': 'NeomakeErrorMsg'}
+
 
 " don't show quickfix in buffer list
 augroup QFix
@@ -324,8 +322,13 @@ autocmd FileType zsh          set ts=4 sw=4 et
 autocmd FileType vim,ruby,yaml,haml,css,html,eruby,coffee,javascript,markdown,sh autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " ----- Colorschemes
-colorscheme github
+" colorscheme github
 colorscheme synthwave
+
+" if($VISTYLE=='dark')
+"     set background=dark
+" endif
+
 
 " ----- NERDCommenter
 let NERDSpaceDelims = 1
