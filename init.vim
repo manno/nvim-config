@@ -43,6 +43,7 @@ augroup END
 "----- Search
 set ignorecase
 set smartcase
+set inccommand=nosplit "split?
 
 "----- Encoding
 set nodigraph               " Disable digraphs for uumlauts
@@ -104,7 +105,8 @@ nnoremap <leader>p   :tabprev<CR>
 command! Q      :quitall
 
 " Close current buffer
-map <leader>w       <ESC>:bw<CR>
+nnoremap <leader>w       :bw<CR>
+nnoremap <leader>D       :%bd!<CR>
 
 " Debug
 map   <F6>      :command
@@ -176,14 +178,12 @@ Plug 'vim-scripts/vim-airline'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
-"Plug 'Shougo/neocomplete.vim'
-"Plug 'Shougo/neocomplcache.vim'
-" function! DoRemote(arg)
-"   UpdateRemotePlugins
-" endfunction
-" Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+" FIXME python setup: pip3 install neovim
+if has('python3')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    " Plug 'ncm2/ncm2'
+endif
 
-Plug 'roxma/nvim-completion-manager', { 'do': 'pip3 install --user neovim jedi mistune psutil setproctitle' }
 Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
 
 " Syntax errors
@@ -196,26 +196,32 @@ Plug 'jonathanfilip/vim-lucius'
 "Plug 'noahfrederick/vim-hemisu'
 Plug 'endel/vim-github-colorscheme'
 "Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'TroyFletcher/vim-colors-synthwave'
+Plug 'drewtempelmeyer/palenight.vim'
 
 " Ctags support
-Plug 'szw/vim-tags'
+Plug 'manno/vim-tags'
 Plug 'majutsushi/tagbar'
 
 " Tmux integration
 Plug 'edkolev/tmuxline.vim'
+
+" Readline style insertion
+Plug 'tpope/vim-rsi'
 
 " Format SQL
 Plug 'vim-scripts/SQLUtilities'
 Plug 'vim-scripts/Align'
 
 " Surround - yse' veS'
-Plug 'tpope/vim-surround'
+"Plug 'tpope/vim-surround'
+Plug 'machakann/vim-sandwich'
 
 " Vim ruby
 " gem install gem-ctags
 Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 Plug 'tpope/vim-rake', { 'for': 'ruby' }
-Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'janko-m/vim-test'
 
@@ -241,6 +247,7 @@ Plug 'vim-scripts/R.vim', { 'for': 'r' }
 
 " Git
 Plug 'vim-scripts/fugitive.vim'
+Plug 'airblade/vim-gitgutter'
 
 " Latexsuite = vim-latex
 Plug 'vim-latex/vim-latex', { 'for': 'tex' }
@@ -259,7 +266,7 @@ nmap <F3> :TestFile<CR>
 let test#strategy = "neovim"
 
 " tagbar
-nmap <F5> :TagbarToggle<CR>
+"nmap <F5> :TagbarToggle<CR>
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
@@ -283,7 +290,7 @@ augroup QFix
 augroup END
 
 " Vim Rooter
-let g:rooter_patterns = [ 'package.json', 'README.md', 'Rakefile', '.git', '.git/', '_darcs/', '.hg/', '.bzr/', '.svn/' ]
+let g:rooter_patterns = [ 'Gemfile', 'package.json', 'README.md', 'Rakefile', '.git', '.git/', '_darcs/', '.hg/', '.bzr/', '.svn/' ]
 
 " ----- Filetype Specific Settings
 "
@@ -318,6 +325,7 @@ autocmd FileType vim,ruby,yaml,haml,css,html,eruby,coffee,javascript,markdown,sh
 
 " ----- Colorschemes
 colorscheme github
+colorscheme synthwave
 
 " ----- NERDCommenter
 let NERDSpaceDelims = 1
