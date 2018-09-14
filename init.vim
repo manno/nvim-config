@@ -9,6 +9,7 @@ set tabstop=2
 set expandtab
 set cf                " Enable error files & error jumping.
 set autowrite         " Writes on make/shell commands
+set number            " Show line numbers
 
 "----- speed
 set synmaxcol=512
@@ -117,17 +118,6 @@ map !ma       <ESC>:w<CR>:make<CR>
 " Search
 map <leader>g     :Ggrep <C-R><C-W><CR>
 
-" ----- Mousewheel in Xterm
-"
-" map <M-Esc>[62~ <MouseDown>
-" map! <M-Esc>[62~ <MouseDown>
-" map <M-Esc>[63~ <MouseUp>
-" map! <M-Esc>[63~ <MouseUp>
-" map <M-Esc>[64~ <S-MouseDown>
-" map! <M-Esc>[64~ <S-MouseDown>
-" map <M-Esc>[65~ <S-MouseUp>
-" map! <M-Esc>[65~ <S-MouseUp>
-
 " Forgot to open as root?
 command! Wsudo  :w !sudo tee > /dev/null %
 
@@ -192,6 +182,7 @@ Plug 'jonathanfilip/vim-lucius'
 "Plug 'noahfrederick/vim-hemisu'
 Plug 'endel/vim-github-colorscheme'
 "Plug 'chriskempson/vim-tomorrow-theme'
+"Plug 'iCyMind/NeoSolarized'
 Plug 'TroyFletcher/vim-colors-synthwave'
 Plug 'drewtempelmeyer/palenight.vim'
 
@@ -224,7 +215,7 @@ Plug 'janko-m/vim-test'
 Plug 'manno/file-line'
 
 " Gvim related - change project root
-Plug 'airblade/vim-rooter'
+"Plug 'airblade/vim-rooter'
 
 " Polyglot bundles csv.vim and an old version too
 " Instead install separately https://github.com/sheerun/vim-polyglot
@@ -245,7 +236,6 @@ Plug 'vim-latex/vim-latex', { 'for': 'tex' }
 " Git
 Plug 'vim-scripts/fugitive.vim'
 Plug 'airblade/vim-gitgutter'
-
 
 call plug#end()
 
@@ -274,6 +264,7 @@ set diffopt+=vertical
 let g:airline#extensions#tabline#enabled = 1
 "let g:airline_powerline_fonts = 1
 let g:airline_theme='lucius'
+let g:airline_theme='kolor'
 let g:airline#extensions#branch#enabled = 0
 let g:airline#extensions#tmuxline#enabled = 1
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux.airline.conf"
@@ -305,11 +296,9 @@ autocmd FileType java         set foldmethod=manual
 autocmd FileType javascript   set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType lua          set ts=4 sw=4 et smartindent foldmethod=syntax
 autocmd FileType nfo          edit ++enc=cp437
-autocmd FileType perl         source $HOME/.config/nvim/config/filetype_perl.vim
 autocmd FileType php          set omnifunc=phpcomplete#CompletePHP
-autocmd FileType plaintex     source $HOME/.config/nvim/config/filetype_tex.vim
 autocmd FileType python       set omnifunc=pythoncomplete#Complete
-autocmd FileType ruby         source $HOME/.config/nvim/config/filetype_ruby.vim
+autocmd FileType ruby         set number foldmethod=manual ts=2 sw=2
 autocmd FileType ruby,eruby   let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby   let g:rubycomplete_classes_in_global = 1
 autocmd FileType ruby,eruby   let g:rubycomplete_rails = 1
@@ -324,11 +313,6 @@ autocmd FileType vim,ruby,yaml,haml,css,html,eruby,coffee,javascript,markdown,sh
 " ----- Colorschemes
 " colorscheme github
 colorscheme synthwave
-
-" if($VISTYLE=='dark')
-"     set background=dark
-" endif
-
 
 " ----- NERDCommenter
 let NERDSpaceDelims = 1
