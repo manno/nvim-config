@@ -167,10 +167,8 @@ Plug 'junegunn/fzf.vim'
 " FIXME python setup: pip3 install neovim
 if has('python3')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    " Plug 'ncm2/ncm2'
+    Plug 'zchee/deoplete-go', { 'do': 'make'}
 endif
-
-Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
 
 " Syntax errors
 "Plug 'scrooloose/syntastic'
@@ -291,6 +289,7 @@ autocmd FileType eruby        map _rw i<%= %>
 autocmd FileType eruby        set ts=2 sw=2 number
 autocmd FileType go           map <F4> :GoImports<CR>
 autocmd FileType go           setlocal noet ts=8 sw=8 sts=8 number
+autocmd FileType go           set completeopt-=preview
 autocmd FileType html         set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType java         set foldmethod=manual
 autocmd FileType javascript   set omnifunc=javascriptcomplete#CompleteJS
