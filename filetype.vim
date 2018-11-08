@@ -28,8 +28,8 @@ augroup filetypedetect
     au BufRead,BufNewFile *.nfo          setf nfo
     au BufRead,BufNewFile *.pdf          setf pdf
     au BufRead,BufNewFile *.txt          setf text
-    au BufWritePost *.go                 Neomake
-    au BufWritePost *.js                 Neomake
-    au BufWritePost *.rb                  Neomake
+    "au BufWritePost *.go                 Neomake
+    "au BufWritePost *.js                 Neomake
+    "au BufWritePost *.rb                 Neomake
     au BufWritePost *.go                 GoImports
 augroup END

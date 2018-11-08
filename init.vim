@@ -172,7 +172,8 @@ endif
 
 " Syntax errors
 "Plug 'scrooloose/syntastic'
-Plug 'benekastah/neomake'
+"Plug 'benekastah/neomake'
+Plug 'w0rp/ale'
 
 " Colorschemes
 Plug 'jonathanfilip/vim-lucius'
@@ -259,16 +260,23 @@ autocmd QuickFixCmdPost *grep* cwindow
 set diffopt+=vertical
 
 " airline
-let g:airline#extensions#tabline#enabled = 1
-"let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
 let g:airline_theme='lucius'
 let g:airline_theme='kolor'
 let g:airline#extensions#branch#enabled = 0
 let g:airline#extensions#tmuxline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux.airline.conf"
 
+" Syntax errors
 let g:neomake_warning_sign={'text': '!', 'texthl': 'NeomakeErrorMsg'}
-
+let g:ale_sign_warning = '⚠'
+let g:ale_sign_error = '✖'
+let g:ale_sign_column_always = 1
+let g:airline#extensions#ale#enabled = 1
+" :so $VIMRUNTIME/syntax/hitest.vim
+highlight link ALEErrorSign Number
+highlight link ALEWarningSign Number
 
 " don't show quickfix in buffer list
 augroup QFix
