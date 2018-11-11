@@ -36,10 +36,11 @@ set undofile                " So is persistent undo ...
 set undolevels=1000         " Maximum number of changes that can be undone
 set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
 
-augroup NoSimultaneousEdits
-    autocmd!
-    autocmd  SwapExists  *  :let v:swapchoice = 'o'
-augroup END
+" not working anymore?
+" augroup NoSimultaneousEdits
+"     autocmd!
+"     autocmd  SwapExists  *  :let v:swapchoice = 'o'
+" augroup END
 
 "----- Search
 set ignorecase
@@ -145,7 +146,7 @@ endif
 call plug#begin('~/.config/nvim/plugged')
 
 " Nerd
-Plug 'vim-scripts/The-NERD-Commenter'
+Plug 'scrooloose/nerdcommenter'
 
 " Grep
 "Plug 'vim-scripts/grep.vim'
@@ -155,7 +156,8 @@ Plug 'manno/grep'
 "Plug 'rking/ag.vim'
 
 " Status line
-Plug 'vim-scripts/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Open files
 "Plug 'Shougo/unite.vim'
@@ -233,7 +235,7 @@ Plug 'davinche/godown-vim', { 'for': 'markdown' }
 Plug 'vim-latex/vim-latex', { 'for': 'tex' }
 
 " Git
-Plug 'vim-scripts/fugitive.vim'
+Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 call plug#end()
@@ -260,8 +262,8 @@ autocmd QuickFixCmdPost *grep* cwindow
 set diffopt+=vertical
 
 " airline
-let g:airline_powerline_fonts = 1
-let g:airline_theme='lucius'
+"let g:airline_powerline_fonts = 1
+"let g:airline_theme='lucius'
 let g:airline_theme='kolor'
 let g:airline#extensions#branch#enabled = 0
 let g:airline#extensions#tmuxline#enabled = 1
@@ -269,8 +271,8 @@ let g:airline#extensions#tabline#enabled = 1
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux.airline.conf"
 
 " Syntax errors
-let g:neomake_warning_sign={'text': '!', 'texthl': 'NeomakeErrorMsg'}
-let g:ale_sign_warning = '⚠'
+"let g:neomake_warning_sign={'text': '!', 'texthl': 'NeomakeErrorMsg'}
+let g:ale_sign_warning = '!'
 let g:ale_sign_error = '✖'
 let g:ale_sign_column_always = 1
 let g:airline#extensions#ale#enabled = 1
@@ -285,7 +287,7 @@ augroup QFix
 augroup END
 
 " Vim Rooter
-let g:rooter_patterns = [ 'Gemfile', 'package.json', 'README.md', 'Rakefile', '.git', '.git/', '_darcs/', '.hg/', '.bzr/', '.svn/' ]
+"let g:rooter_patterns = [ 'Gemfile', 'package.json', 'README.md', 'Rakefile', '.git', '.git/', '_darcs/', '.hg/', '.bzr/', '.svn/' ]
 
 " ----- Filetype Specific Settings
 "
@@ -313,6 +315,7 @@ autocmd FileType vim          set ts=4 sw=4
 autocmd FileType xml          set omnifunc=xmlcomplete#CompleteTags ts=4 sw=4
 autocmd FileType xwt          set ts=2 sw=2 foldmethod=syntax
 autocmd FileType zsh          set ts=4 sw=4 et
+autocmd filetype crontab setlocal nobackup nowritebackup
 
 " strip trailing whitespace
 autocmd FileType vim,ruby,yaml,haml,css,html,eruby,coffee,javascript,markdown,sh autocmd BufWritePre <buffer> :%s/\s\+$//e
