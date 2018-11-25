@@ -267,7 +267,8 @@ set diffopt+=vertical
 let g:airline_theme='kolor'
 let g:airline#extensions#branch#enabled = 0
 let g:airline#extensions#tmuxline#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
+let g:airline#extensions#tabline#fnamemod = ':t'
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux.airline.conf"
 
 " Syntax errors
