@@ -208,7 +208,7 @@ Plug 'machakann/vim-sandwich'
 " gem install gem-ctags
 Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 Plug 'tpope/vim-rake', { 'for': 'ruby' }
-Plug 'fatih/vim-go', { 'for': 'go', 'do': 'silent :GoInstallBinaries' }
+Plug 'fatih/vim-go', { 'for': 'go', 'do': ':silent GoInstallBinaries' }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'janko-m/vim-test'
 
@@ -256,6 +256,7 @@ let test#strategy = "neovim"
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#go#gocode_binary = $HOME . 'go/bin/gocode'
 
 " fugitive git grep
 autocmd QuickFixCmdPost *grep* cwindow
@@ -267,8 +268,8 @@ set diffopt+=vertical
 let g:airline_theme='kolor'
 let g:airline#extensions#branch#enabled = 0
 let g:airline#extensions#tmuxline#enabled = 1
-let g:airline#extensions#tabline#enabled = 0
-let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ":t"
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux.airline.conf"
 
 " Syntax errors
