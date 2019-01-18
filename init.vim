@@ -254,7 +254,7 @@ let test#strategy = "neovim"
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#go#gocode_binary = $HOME . 'go/bin/gocode'
+let g:deoplete#sources#go#gocode_binary = $HOME . '/go/bin/gocode'
 
 " fugitive git grep
 autocmd QuickFixCmdPost *grep* cwindow
@@ -273,9 +273,9 @@ let g:gutentags_cache_dir = $HOME . '/.cache/gutentags'
 "let g:airline_theme='lucius'
 let g:airline_theme='kolor'
 let g:airline#extensions#branch#enabled = 0
-let g:airline#extensions#tmuxline#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ":t"
+let g:airline#extensions#tmuxline#enabled = 1
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux.airline.conf"
 
 " Syntax errors
