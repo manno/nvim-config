@@ -188,8 +188,9 @@ Plug 'TroyFletcher/vim-colors-synthwave'
 Plug 'drewtempelmeyer/palenight.vim'
 
 " Ctags support
-Plug 'manno/vim-tags'
-Plug 'majutsushi/tagbar'
+"Plug 'manno/vim-tags'
+"Plug 'majutsushi/tagbar'
+Plug 'ludovicchabant/vim-gutentags'
 
 " Tmux integration
 Plug 'edkolev/tmuxline.vim'
@@ -251,9 +252,6 @@ map <leader>b :Buffers<CR>
 nmap <F3> :TestFile<CR>
 let test#strategy = "neovim"
 
-" tagbar
-"nmap <F5> :TagbarToggle<CR>
-
 " deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#go#gocode_binary = $HOME . 'go/bin/gocode'
@@ -261,6 +259,14 @@ let g:deoplete#sources#go#gocode_binary = $HOME . 'go/bin/gocode'
 " fugitive git grep
 autocmd QuickFixCmdPost *grep* cwindow
 set diffopt+=vertical
+
+" gutentags
+let g:gutentags_cache_dir = $HOME . '/.cache/gutentags'
+" let g:gutentags_file_list_command = {
+"     \ 'markers': {
+"         \ '.git': 'git ls-files',
+"         \ },
+"     \ }
 
 " airline
 "let g:airline_powerline_fonts = 1
