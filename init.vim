@@ -287,6 +287,7 @@ let g:airline#extensions#ale#enabled = 1
 " :so $VIMRUNTIME/syntax/hitest.vim
 highlight link ALEErrorSign Number
 highlight link ALEWarningSign Number
+let g:ale_linters = {'go': ['gometalinter']}
 
 " don't show quickfix in buffer list
 augroup QFix
