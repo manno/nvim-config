@@ -359,6 +359,7 @@ autocmd FileType go           setlocal noet ts=8 sw=8 sts=8 number
 autocmd FileType java         set foldmethod=manual
 autocmd FileType lua          set ts=4 sw=4 et smartindent foldmethod=syntax
 autocmd FileType nfo          edit ++enc=cp437
+autocmd FileType nfo          silent edit ++enc=cp437
 autocmd FileType ruby         set number foldmethod=manual
 autocmd FileType vim          set ts=4 sw=4
 autocmd FileType xml          set ts=4 sw=4
