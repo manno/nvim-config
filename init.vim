@@ -167,10 +167,15 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
 " FIXME python setup: pip3 install neovim
-if has('python3')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'zchee/deoplete-go', { 'do': 'make'}
-endif
+" if has('python3')
+"     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"     Plug 'zchee/deoplete-go', { 'do': 'make'}
+" endif
+
+" run CocConfig to add language servers, e.g.
+"   go get -u golang.org/x/tools/...
+"   https://github.com/saibing/tools
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Syntax errors
 "Plug 'scrooloose/syntastic'
@@ -247,6 +252,11 @@ call plug#end()
 " fzf
 map <leader>t :GitFiles<CR>
 map <leader>b :Buffers<CR>
+map <leader>F :Rg<CR>
+"let g:fzf_layout = { 'up': '~50%' }
+
+" vim-go
+map <leader>f :GoDecls<CR>
 
 " vim-test
 nmap <F3> :TestFile<CR>
@@ -302,27 +312,19 @@ augroup END
 "
 "autocmd FileType csv          set nofoldenable
 "autocmd FileType xml          let g:xml_syntax_folding = 1
-autocmd FileType c            set omnifunc=ccomplete#Complete ts=2 sw=2 cindent
-autocmd FileType css          set omnifunc=csscomplete#CompleteCSS
+autocmd FileType c            set cindent
 autocmd FileType eruby        map _rw i<%= %>
-autocmd FileType eruby        set ts=2 sw=2 number
+autocmd FileType eruby        set number
 autocmd FileType go           map <F4> :GoImports<CR>
 autocmd FileType go           setlocal noet ts=8 sw=8 sts=8 number
 autocmd FileType go           set completeopt-=preview
-autocmd FileType html         set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType java         set foldmethod=manual
-autocmd FileType javascript   set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType lua          set ts=4 sw=4 et smartindent foldmethod=syntax
 autocmd FileType nfo          edit ++enc=cp437
-autocmd FileType php          set omnifunc=phpcomplete#CompletePHP
-autocmd FileType python       set omnifunc=pythoncomplete#Complete
-autocmd FileType ruby         set number foldmethod=manual ts=2 sw=2
-autocmd FileType ruby,eruby   let g:rubycomplete_buffer_loading = 1
-autocmd FileType ruby,eruby   let g:rubycomplete_classes_in_global = 1
-autocmd FileType ruby,eruby   let g:rubycomplete_rails = 1
+autocmd FileType ruby         set number foldmethod=manual
 autocmd FileType vim          set ts=4 sw=4
-autocmd FileType xml          set omnifunc=xmlcomplete#CompleteTags ts=4 sw=4
-autocmd FileType xwt          set ts=2 sw=2 foldmethod=syntax
+autocmd FileType xml          set ts=4 sw=4
+autocmd FileType xwt          set foldmethod=syntax
 autocmd FileType zsh          set ts=4 sw=4 et
 autocmd filetype crontab setlocal nobackup nowritebackup
 
