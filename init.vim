@@ -175,7 +175,7 @@ Plug 'junegunn/fzf.vim'
 " run CocConfig to add language servers, e.g.
 "   go get -u golang.org/x/tools/...
 "   https://github.com/saibing/tools
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-gocode'}
 
 " Syntax errors
 "Plug 'scrooloose/syntastic'
@@ -315,7 +315,7 @@ augroup END
 autocmd FileType c            set cindent
 autocmd FileType eruby        map _rw i<%= %>
 autocmd FileType eruby        set number
-autocmd FileType go           map <F4> :GoImports<CR>
+"autocmd FileType go           map <F4> :GoImports<CR>
 autocmd FileType go           setlocal noet ts=8 sw=8 sts=8 number
 autocmd FileType go           set completeopt-=preview
 autocmd FileType java         set foldmethod=manual
