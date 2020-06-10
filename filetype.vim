@@ -31,5 +31,6 @@ augroup filetypedetect
     "au BufWritePost *.go                 Neomake
     "au BufWritePost *.js                 Neomake
     "au BufWritePost *.rb                 Neomake
-    au BufWritePost *.go                 GoImports
+    "au BufWritePost *.go                 GoImports
+    au BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
 augroup END

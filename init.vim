@@ -123,6 +123,8 @@ nnoremap <leader>D       :%bd!<CR>
 " Debug
 map   <F6>      :command
 map   <F7>      :n ~/.config/nvim/init.vim<CR>
+" https://github.com/neoclide/coc.nvim/blob/master/data/schema.json
+map   <leader><F7>      :CocConfig<CR>
 
 " Make
 map !ma       <ESC>:w<CR>:make<CR>
@@ -180,7 +182,16 @@ Plug 'junegunn/fzf.vim'
 " run CocConfig to add language servers, e.g.
 "   go get -u golang.org/x/tools/...
 "   https://github.com/saibing/tools
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-gocode'}
+"   https://github.com/josa42/coc-go#example-configuration
+"   https://github.com/neoclide/coc.nvim/blob/master/data/schema.json
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-go'}
+" CocInstall coc-diagnostic
+let g:coc_global_extensions=['coc-json',
+                           \ 'coc-diagnostic',
+                           \ 'coc-tsserver',
+                           \ 'coc-go',
+                           \ 'coc-clangd',
+                           \ 'coc-yaml' ]
 
 " Syntax errors
 "Plug 'scrooloose/syntastic'
@@ -219,7 +230,7 @@ Plug 'machakann/vim-sandwich'
 " gem install gem-ctags
 Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 Plug 'tpope/vim-rake', { 'for': 'ruby' }
-Plug 'fatih/vim-go', { 'for': 'go', 'do': ':silent GoInstallBinaries' }
+"Plug 'fatih/vim-go', { 'for': 'go', 'do': ':silent GoInstallBinaries' }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'janko-m/vim-test'
 
@@ -261,7 +272,7 @@ map <leader>F :Rg<CR>
 "let g:fzf_layout = { 'up': '~50%' }
 
 " vim-go
-map <leader>f :GoDecls<CR>
+"map <leader>f :GoDecls<CR>
 
 " vim-test
 nmap <F3> :TestFile<CR>
@@ -289,22 +300,38 @@ let g:airline#extensions#tabline#fnamemod = ":t"
 let g:airline#extensions#tmuxline#enabled = 1
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux.airline.conf"
 
-" Syntax errors
+" Language Support
 "let g:neomake_warning_sign={'text': '!', 'texthl': 'NeomakeErrorMsg'}
+" test highlights:
+" :so $VIMRUNTIME/syntax/hitest.vim
+highlight link ALEErrorSign Number
+highlight link ALEWarningSign Number
 let g:ale_sign_warning = '!'
 let g:ale_sign_error = '✖'
 let g:ale_sign_column_always = 1
 let g:airline#extensions#ale#enabled = 1
-" :so $VIMRUNTIME/syntax/hitest.vim
-highlight link ALEErrorSign Number
-highlight link ALEWarningSign Number
 let g:ale_cursor_detail = 0
 let g:ale_go_golangci_lint_package = 1
 " don't enable all: golangci-lint linters
 let g:ale_go_golangci_lint_options = ''
-let g:ale_linters = {'go': []}
-"let g:ale_linters = {'go': ['golangci-lint']}
+"let g:ale_linters = {'go': []}
+let g:ale_linters = {'go': ['golangci-lint']}
+"let g:ale_linters = {'go': ['gometalinter']}
 "let g:ale_linters = {'go': ['golint', 'gopls']}
+" need to share gopls with ale?
+"g:go_gopls_options=
+
+" vim-go
+"map <leader>f :GoDecls<CR>
+"let g:go_code_completion_enabled = 0
+"let g:go_fmt_command = 'goimports'
+
+" coc
+" Use `[c` and `]c` to navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+nmap <silent> ]n :ALENext<CR>
+nmap <silent> K  :call CocAction('doHover')<CR>
 
 " don't show quickfix in buffer list
 augroup QFix
@@ -324,7 +351,7 @@ autocmd FileType eruby        map _rw i<%= %>
 autocmd FileType eruby        set number
 "autocmd FileType go           map <F4> :GoImports<CR>
 autocmd FileType go           setlocal noet ts=8 sw=8 sts=8 number
-autocmd FileType go           set completeopt-=preview
+"autocmd FileType go           set completeopt-=preview
 autocmd FileType java         set foldmethod=manual
 autocmd FileType lua          set ts=4 sw=4 et smartindent foldmethod=syntax
 autocmd FileType nfo          edit ++enc=cp437
