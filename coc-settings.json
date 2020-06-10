@@ -4,7 +4,26 @@
       "command": "gopls",
       "args": [],
       "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "disableWorkspaceFolders": true,
       "filetypes": ["go"]
+    },
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+      "rootPatterns": [".ccls-root", "compile_commands.json"],
+      "initializationOptions": {
+        "cache": {
+          "directory": ".ccls-cache"
+        }
+      }
     }
+  },
+  "coc.preferences.formatOnSaveFiletypes": ["go"],
+  "diagnostic.errorSign": "✖",
+  "diagnostic.infoSign": "ℹ",
+  "diagnostic.hintSign": "ℹ",
+  "go.goplsOptions": {
+    "staticcheck": true,
+    "completeUnimported": true
   }
 }

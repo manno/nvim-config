@@ -328,10 +328,14 @@ let g:ale_linters = {'go': ['golangci-lint']}
 
 " coc
 " Use `[c` and `]c` to navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <silent> ]n :ALENext<CR>
 nmap <silent> K  :call CocAction('doHover')<CR>
+autocmd FileType c,cpp,go nmap <silent> gd <Plug>(coc-declaration)
+autocmd FileType go nmap <silent> <C-]> <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+nmap <leader>lr <Plug>(coc-rename)
 
 " don't show quickfix in buffer list
 augroup QFix
