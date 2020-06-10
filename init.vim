@@ -73,12 +73,22 @@ function! WordProcessor(enable)
     echo "WordProcessor Mode: enabled"
     imap <Up> <C-O>gk
     imap <Down> <C-O>gj
+    imap <k> <C-O>gk
+    imap <j> <C-O>gj
   else
     echo "WordProcessor Mode: disabled"
     silent! iunmap <Up>
     silent! iunmap <Down>
+    silent! iunmap <k>
+    silent! iunmap <j>
   endif
 endfunction
+
+" disable arrow keys to learn hjkl
+" noremap <Up> <Nop>
+" noremap <Down> <Nop>
+" noremap <Left> <Nop>
+" noremap <Right> <Nop>
 
 " German spelling
 map <F8>        :setlocal spell spelllang=de_20,de,en<CR>:call WordProcessor(1)<CR>
@@ -112,12 +122,13 @@ nnoremap <leader>D       :%bd!<CR>
 
 " Debug
 map   <F6>      :command
+map   <F7>      :n ~/.config/nvim/init.vim<CR>
 
 " Make
 map !ma       <ESC>:w<CR>:make<CR>
 
 " Search
-map <leader>g     :Ggrep <C-R><C-W><CR>
+map <leader>G     :Ggrep <C-R><C-W> ':(exclude)*fake*'<CR>
 
 " Forgot to open as root?
 command! Wsudo  :w !sudo tee > /dev/null %
@@ -150,7 +161,7 @@ Plug 'scrooloose/nerdcommenter'
 
 " Grep
 "Plug 'vim-scripts/grep.vim'
-Plug 'manno/grep'
+"Plug 'manno/grep'
 
 " Search with ag?
 "Plug 'rking/ag.vim'
@@ -165,12 +176,6 @@ Plug 'vim-airline/vim-airline-themes'
 "Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
-
-" FIXME python setup: pip3 install neovim
-" if has('python3')
-"     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"     Plug 'zchee/deoplete-go', { 'do': 'make'}
-" endif
 
 " run CocConfig to add language servers, e.g.
 "   go get -u golang.org/x/tools/...
@@ -262,10 +267,6 @@ map <leader>f :GoDecls<CR>
 nmap <F3> :TestFile<CR>
 let test#strategy = "neovim"
 
-" deoplete
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#go#gocode_binary = $HOME . '/go/bin/gocode'
-
 " fugitive git grep
 autocmd QuickFixCmdPost *grep* cwindow
 set diffopt+=vertical
@@ -297,7 +298,13 @@ let g:airline#extensions#ale#enabled = 1
 " :so $VIMRUNTIME/syntax/hitest.vim
 highlight link ALEErrorSign Number
 highlight link ALEWarningSign Number
-let g:ale_linters = {'go': ['gometalinter']}
+let g:ale_cursor_detail = 0
+let g:ale_go_golangci_lint_package = 1
+" don't enable all: golangci-lint linters
+let g:ale_go_golangci_lint_options = ''
+let g:ale_linters = {'go': []}
+"let g:ale_linters = {'go': ['golangci-lint']}
+"let g:ale_linters = {'go': ['golint', 'gopls']}
 
 " don't show quickfix in buffer list
 augroup QFix
@@ -329,7 +336,7 @@ autocmd FileType zsh          set ts=4 sw=4 et
 autocmd filetype crontab setlocal nobackup nowritebackup
 
 " strip trailing whitespace
-autocmd FileType vim,ruby,yaml,haml,css,html,eruby,coffee,javascript,markdown,sh autocmd BufWritePre <buffer> :%s/\s\+$//e
+autocmd FileType c,vim,ruby,yaml,haml,css,html,eruby,coffee,javascript,markdown,sh autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " ----- Colorschemes
 " colorscheme github
@@ -347,3 +354,35 @@ nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
+
+" fzf grep
+command! -bang -nargs=* GGrep
+  \ call fzf#vim#grep(
+  \   'git grep --line-number '.shellescape(<q-args>), 0,
+  \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
+map <leader>g     :GGrep <C-R><C-W><CR>
+
+" floating fzf (https://github.com/junegunn/fzf.vim/issues/664)
+let $FZF_DEFAULT_OPTS .= ' --layout=reverse'
+
+function! FloatingFZF()
+	let height = &lines
+	let width = float2nr(&columns - (&columns * 2 / 10))
+	let col = float2nr((&columns - width) / 2)
+	let col_offset = &columns / 10
+	let opts = {
+				\ 'relative': 'editor',
+				\ 'row': 1,
+				\ 'col': col + col_offset,
+				\ 'width': width * 2 / 1,
+				\ 'height': height / 2,
+				\ 'style': 'minimal'
+				\ }
+	let buf = nvim_create_buf(v:false, v:true)
+	let win = nvim_open_win(buf, v:true, opts)
+	call setwinvar(win, '&winhl', 'NormalFloat:TabLine')
+endfunction
+
+let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+
+highlight TabLine ctermbg=black
