@@ -216,6 +216,9 @@ Plug 'ludovicchabant/vim-gutentags'
 " Tmux integration
 Plug 'edkolev/tmuxline.vim'
 
+" Remote copy and paste?
+Plug 'fcpg/vim-osc52'
+
 " Readline style insertion
 Plug 'tpope/vim-rsi'
 
@@ -270,6 +273,9 @@ map <leader>t :GitFiles<CR>
 map <leader>b :Buffers<CR>
 map <leader>F :Rg<CR>
 "let g:fzf_layout = { 'up': '~50%' }
+
+" osc52 copy and paste
+xmap <leader>y y:call SendViaOSC52(getreg('"'))<cr>
 
 " vim-go
 "map <leader>f :GoDecls<CR>

@@ -1,9 +1,11 @@
 {
+  "coc.preferences.useQuickfixForLocations": true,
+  "coc.preferences.snippets.enable": true,
   "languageserver": {
     "golang": {
       "command": "gopls",
       "args": [],
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "rootPatterns": ["go.mod", ".vim/", ".git/", "Session.vim"],
       "disableWorkspaceFolders": true,
       "filetypes": ["go"]
     },
