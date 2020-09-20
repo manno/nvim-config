@@ -207,6 +207,7 @@ Plug 'endel/vim-github-colorscheme'
 "Plug 'iCyMind/NeoSolarized'
 Plug 'TroyFletcher/vim-colors-synthwave'
 Plug 'drewtempelmeyer/palenight.vim'
+Plug 'embark-theme/vim', { 'as': 'embark' }
 
 " Ctags support
 "Plug 'manno/vim-tags'
@@ -297,16 +298,17 @@ let g:gutentags_cache_dir = $HOME . '/.cache/gutentags'
 "     \ }
 
 " airline
-"let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
 "let g:airline_theme='lucius'
-let g:airline_theme='kolor'
+"let g:airline_theme='kolor'
+let g:airline_theme = 'embark'
 let g:airline#extensions#branch#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ":t"
 let g:airline#extensions#tmuxline#enabled = 1
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux.airline.conf"
 
-" Language Support
+" Syntax errors
 "let g:neomake_warning_sign={'text': '!', 'texthl': 'NeomakeErrorMsg'}
 " test highlights:
 " :so $VIMRUNTIME/syntax/hitest.vim
@@ -378,7 +380,8 @@ autocmd FileType c,vim,ruby,yaml,haml,css,html,eruby,coffee,javascript,markdown,
 
 " ----- Colorschemes
 " colorscheme github
-colorscheme synthwave
+"colorscheme synthwave
+colorscheme embark
 
 " ----- NERDCommenter
 let NERDSpaceDelims = 1
