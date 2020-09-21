@@ -173,9 +173,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " Open files
-"Plug 'Shougo/unite.vim'
-"Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-"Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
