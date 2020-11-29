@@ -36,12 +36,6 @@ set undofile                " So is persistent undo ...
 set undolevels=1000         " Maximum number of changes that can be undone
 set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
 
-" not working anymore?
-" augroup NoSimultaneousEdits
-"     autocmd!
-"     autocmd  SwapExists  *  :let v:swapchoice = 'o'
-" augroup END
-
 "----- Search
 set ignorecase
 set smartcase
@@ -120,6 +114,16 @@ command! Q      :quitall
 nnoremap <leader>w       :bw<CR>
 nnoremap <leader>D       :%bd!<CR>
 
+" Terminal
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+
 " Debug
 map   <F6>      :command
 map   <F7>      :n ~/.config/nvim/init.vim<CR>
@@ -172,6 +176,11 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
+" if has('nvim-0.5.0')
+"     Plug 'kyazdani42/nvim-web-devicons'
+"     Plug 'romgrk/barbar.nvim'
+" endif
+
 " Open files
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
@@ -197,14 +206,15 @@ Plug 'w0rp/ale'
 
 " Colorschemes
 Plug 'jonathanfilip/vim-lucius'
-"Plug 'tomasr/molokai'
-"Plug 'noahfrederick/vim-hemisu'
+Plug 'tomasr/molokai'
+Plug 'noahfrederick/vim-hemisu'
 Plug 'endel/vim-github-colorscheme'
 "Plug 'chriskempson/vim-tomorrow-theme'
 "Plug 'iCyMind/NeoSolarized'
 Plug 'TroyFletcher/vim-colors-synthwave'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'embark-theme/vim', { 'as': 'embark' }
+Plug 'sainnhe/sonokai'
 
 " Ctags support
 "Plug 'manno/vim-tags'
@@ -238,24 +248,24 @@ Plug 'janko-m/vim-test'
 " Open files at line
 Plug 'manno/file-line'
 
-" Gvim related - change project root
-"Plug 'airblade/vim-rooter'
-
 " Polyglot bundles csv.vim and an old version too
 " Instead install separately https://github.com/sheerun/vim-polyglot
-" Plug 'vim-polyglot'
-Plug 'stephpy/vim-yaml', { 'for': 'yaml' }
-Plug 'tpope/vim-git', { 'for': 'git' }
-Plug 'tpope/vim-haml', { 'for': 'haml' }
-Plug 'tpope/vim-markdown', { 'for': 'markdown' }
-Plug 'sheerun/yajs.vim', { 'for': 'javascript' }
-Plug 'honza/dockerfile.vim', { 'for': 'docker' }
-Plug 'JulesWang/css.vim', { 'for': 'css' }
-Plug 'othree/html5.vim', { 'for': 'html' }
-Plug 'mitsuhiko/vim-python-combined', { 'for': 'python' }
-Plug 'vim-scripts/R.vim', { 'for': 'r' }
-Plug 'davinche/godown-vim', { 'for': 'markdown' }
-Plug 'vim-latex/vim-latex', { 'for': 'tex' }
+"Plug 'sheerun/vim-polyglot'
+
+" Plug 'stephpy/vim-yaml', { 'for': 'yaml' }
+" Plug 'tpope/vim-git', { 'for': 'git' }
+" Plug 'tpope/vim-haml', { 'for': 'haml' }
+" Plug 'tpope/vim-markdown', { 'for': 'markdown' }
+" Plug 'sheerun/yajs.vim', { 'for': 'javascript' }
+" Plug 'honza/dockerfile.vim', { 'for': 'docker' }
+" Plug 'JulesWang/css.vim', { 'for': 'css' }
+" Plug 'othree/html5.vim', { 'for': 'html' }
+" Plug 'mitsuhiko/vim-python-combined', { 'for': 'python' }
+" Plug 'vim-scripts/R.vim', { 'for': 'r' }
+" Plug 'davinche/godown-vim', { 'for': 'markdown' }
+" Plug 'vim-latex/vim-latex', { 'for': 'tex' }
+"
+Plug 'nvim-treesitter/nvim-treesitter'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -263,14 +273,31 @@ Plug 'airblade/vim-gitgutter'
 
 call plug#end()
 
+" ----- Colorschemes
+if has('termguicolors')
+    set termguicolors
+endif
+if $ITERM_PROFILE=="Light Default"
+    "colorscheme hemisu
+    "colorscheme lucius
+    colorscheme github
+else
+    "colorscheme synthwave
+    colorscheme hemisu
+    "colorscheme lucius
+    "LuciusBlackHighContrast
+    "colorscheme embark
+    "let g:rehash256 = 1
+    "colorscheme molokai
+
+    " let g:sonokai_style = 'shusia'
+    " let g:sonokai_enable_italic = 1
+    " let g:sonokai_disable_italic_comment = 1
+    " colorscheme sonokai
+endif
+
 " ----- Plugin Configurations
 "
-
-" fzf
-map <leader>t :GitFiles<CR>
-map <leader>b :Buffers<CR>
-map <leader>F :Rg<CR>
-"let g:fzf_layout = { 'up': '~50%' }
 
 " osc52 copy and paste
 xmap <leader>y y:call SendViaOSC52(getreg('"'))<cr>
@@ -294,18 +321,36 @@ let g:gutentags_cache_dir = $HOME . '/.cache/gutentags'
 "         \ },
 "     \ }
 
+" NERDCommenter
+let NERDSpaceDelims = 1
+
 " airline
 let g:airline_powerline_fonts = 1
 "let g:airline_theme='lucius'
 "let g:airline_theme='kolor'
-let g:airline_theme = 'embark'
+
+if $ITERM_PROFILE=="Light Default"
+    let g:airline_theme = 'github'
+else
+    "let g:airline_theme = 'sonokai'
+    "let g:airline_theme = 'embark'
+    "let g:airline_theme = 'molokai'
+    let g:airline_theme = 'hybrid'
+endif
+
 let g:airline#extensions#branch#enabled = 0
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ":t"
+
+if match(&runtimepath, 'barbar') != -1
+    let g:airline#extensions#tabline#enabled = 0
+else
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#fnamemod = ":t"
+end
+
 let g:airline#extensions#tmuxline#enabled = 1
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux.airline.conf"
 
-" Syntax errors
+" ALE - Syntax errors
 "let g:neomake_warning_sign={'text': '!', 'texthl': 'NeomakeErrorMsg'}
 " test highlights:
 " :so $VIMRUNTIME/syntax/hitest.vim
@@ -335,6 +380,8 @@ let g:ale_linters = {'go': ['golangci-lint']}
 " Use `[c` and `]c` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> ]f <Plug>(coc-fix-current)
+nmap <silent> ]d <Plug>(coc-definitions)
 nmap <silent> ]n :ALENext<CR>
 nmap <silent> K  :call CocAction('doHover')<CR>
 autocmd FileType c,cpp,go nmap <silent> gd <Plug>(coc-declaration)
@@ -348,50 +395,10 @@ augroup QFix
     autocmd FileType qf setlocal nobuflisted
 augroup END
 
-" Vim Rooter
-"let g:rooter_patterns = [ 'Gemfile', 'package.json', 'README.md', 'Rakefile', '.git', '.git/', '_darcs/', '.hg/', '.bzr/', '.svn/' ]
-
-" ----- Filetype Specific Settings
-"
-"autocmd FileType csv          set nofoldenable
-"autocmd FileType xml          let g:xml_syntax_folding = 1
-autocmd FileType c            set cindent
-autocmd FileType eruby        map _rw i<%= %>
-autocmd FileType eruby        set number
-"autocmd FileType go           map <F4> :GoImports<CR>
-autocmd FileType go           setlocal noet ts=8 sw=8 sts=8 number
-"autocmd FileType go           set completeopt-=preview
-autocmd FileType java         set foldmethod=manual
-autocmd FileType lua          set ts=4 sw=4 et smartindent foldmethod=syntax
-autocmd FileType nfo          edit ++enc=cp437
-autocmd FileType nfo          silent edit ++enc=cp437
-autocmd FileType ruby         set number foldmethod=manual
-autocmd FileType vim          set ts=4 sw=4
-autocmd FileType xml          set ts=4 sw=4
-autocmd FileType xwt          set foldmethod=syntax
-autocmd FileType zsh          set ts=4 sw=4 et
-autocmd filetype crontab setlocal nobackup nowritebackup
-
-" strip trailing whitespace
-autocmd FileType c,vim,ruby,yaml,haml,css,html,eruby,coffee,javascript,markdown,sh autocmd BufWritePre <buffer> :%s/\s\+$//e
-
-" ----- Colorschemes
-" colorscheme github
-"colorscheme synthwave
-colorscheme embark
-
-" ----- NERDCommenter
-let NERDSpaceDelims = 1
-
-" ----- Terminal
-tnoremap <A-h> <C-\><C-n><C-w>h
-tnoremap <A-j> <C-\><C-n><C-w>j
-tnoremap <A-k> <C-\><C-n><C-w>k
-tnoremap <A-l> <C-\><C-n><C-w>l
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
+" ----- fzf
+map <leader>t :GitFiles<CR>
+map <leader>b :Buffers<CR>
+map <leader>F :Rg<CR>
 
 " fzf grep
 command! -bang -nargs=* GGrep
@@ -421,6 +428,46 @@ function! FloatingFZF()
 	call setwinvar(win, '&winhl', 'NormalFloat:TabLine')
 endfunction
 
+"let g:fzf_layout = { 'up': '~50%' }
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 
-highlight TabLine ctermbg=black
+if $ITERM_PROFILE=="Light Default"
+    highlight TabLine ctermbg=white
+"else
+"    highlight TabLine ctermbg=black
+endif
+
+" ----- Filetype Specific Settings
+"
+"autocmd FileType csv          set nofoldenable
+"autocmd FileType xml          let g:xml_syntax_folding = 1
+autocmd FileType c            set cindent
+autocmd FileType eruby        map _rw i<%= %>
+autocmd FileType eruby        set number
+"autocmd FileType go           map <F4> :GoImports<CR>
+autocmd FileType go           setlocal noet ts=8 sw=8 sts=8 number
+"autocmd FileType go           set completeopt-=preview
+autocmd FileType java         set foldmethod=manual
+autocmd FileType lua          set ts=4 sw=4 et smartindent foldmethod=syntax
+autocmd FileType nfo          edit ++enc=cp437
+autocmd FileType nfo          silent edit ++enc=cp437
+autocmd FileType ruby         set number foldmethod=manual
+autocmd FileType vim          set ts=4 sw=4
+autocmd FileType xml          set ts=4 sw=4
+autocmd FileType xwt          set foldmethod=syntax
+autocmd FileType zsh          set ts=4 sw=4 et
+autocmd filetype crontab setlocal nobackup nowritebackup
+
+" strip trailing whitespace
+autocmd FileType c,vim,ruby,yaml,haml,css,html,eruby,coffee,javascript,markdown,sh autocmd BufWritePre <buffer> :%s/\s\+$//e
+
+" Syntax highlight
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    -- disable = { "c", "rust" },  -- list of language that will be disabled
+  },
+}
+EOF
