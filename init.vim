@@ -131,7 +131,7 @@ map   <F7>      :n ~/.config/nvim/init.vim<CR>
 map   <leader><F7>      :CocConfig<CR>
 
 " Make
-map !ma       <ESC>:w<CR>:make<CR>
+map !ma       <ESC>:w<CR>:make %<CR>
 
 " Search
 map <leader>G     :Ggrep <C-R><C-W> ':(exclude)*fake*'<CR>
@@ -247,6 +247,8 @@ Plug 'janko-m/vim-test'
 
 " Open files at line
 Plug 'manno/file-line'
+
+Plug 'zerowidth/vim-copy-as-rtf'
 
 " Polyglot bundles csv.vim and an old version too
 " Instead install separately https://github.com/sheerun/vim-polyglot
@@ -403,7 +405,7 @@ map <leader>F :Rg<CR>
 " fzf grep
 command! -bang -nargs=* GGrep
   \ call fzf#vim#grep(
-  \   'git grep --line-number '.shellescape(<q-args>), 0,
+  \   'git grep --line-number '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
 map <leader>g     :GGrep <C-R><C-W><CR>
 
