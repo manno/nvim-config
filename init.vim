@@ -461,7 +461,7 @@ autocmd FileType zsh          set ts=4 sw=4 et
 autocmd filetype crontab setlocal nobackup nowritebackup
 
 " strip trailing whitespace
-autocmd FileType c,vim,ruby,yaml,haml,css,html,eruby,coffee,javascript,markdown,sh autocmd BufWritePre <buffer> :%s/\s\+$//e
+autocmd FileType c,vim,ruby,yaml,haml,css,html,eruby,coffee,javascript,markdown,sh,python autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " Syntax highlight
 lua <<EOF
