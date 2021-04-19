@@ -173,13 +173,15 @@ Plug 'scrooloose/nerdcommenter'
 "Plug 'rking/ag.vim'
 
 " Status line
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-" if has('nvim-0.5.0')
-"     Plug 'kyazdani42/nvim-web-devicons'
-"     Plug 'romgrk/barbar.nvim'
-" endif
+if has('nvim-0.5.0')
+    Plug 'kyazdani42/nvim-web-devicons'
+    " Plug 'romgrk/barbar.nvim'
+    Plug 'akinsho/nvim-bufferline.lua'
+    Plug 'hoob3rt/lualine.nvim'
+else
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+endif
 
 " Open files
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
@@ -351,11 +353,16 @@ let g:airline#extensions#ale#enabled = 1
 
 if match(&runtimepath, 'barbar') != -1
     let g:airline#extensions#tabline#enabled = 0
+elseif match(&runtimepath, 'nvim-bufferline') != -1
+    lua require'bufferline'.setup{}
 else
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#fnamemod = ":t"
 end
 
+if match(&runtimepath, 'lualine') != -1
+    lua require('lualine').setup { options = { theme = 'tokyonight' } }
+end
 
 " ALE - Syntax errors
 "let g:neomake_warning_sign={'text': '!', 'texthl': 'NeomakeErrorMsg'}
