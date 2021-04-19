@@ -126,9 +126,9 @@ nnoremap <A-l> <C-w>l
 
 " Debug
 map   <F6>      :command
-map   <F7>      :n ~/.config/nvim/init.vim<CR>
+map   <F2>      :n ~/.config/nvim/init.vim<CR>
 " https://github.com/neoclide/coc.nvim/blob/master/data/schema.json
-map   <leader><F7>      :CocConfig<CR>
+map   <leader><F2>      :CocConfig<CR>
 
 " Make
 map !ma       <ESC>:w<CR>:make %<CR>
