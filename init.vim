@@ -333,6 +333,9 @@ let g:airline_powerline_fonts = 1
 "let g:airline_theme='lucius'
 "let g:airline_theme='kolor'
 
+let g:airline#extensions#tmuxline#enabled = 1
+let airline#extensions#tmuxline#snapshot_file = "~/.tmux.airline.conf"
+
 if $ITERM_PROFILE=="Light Default"
     let g:airline_theme = 'github'
 else
@@ -344,6 +347,7 @@ else
 endif
 
 let g:airline#extensions#branch#enabled = 0
+let g:airline#extensions#ale#enabled = 1
 
 if match(&runtimepath, 'barbar') != -1
     let g:airline#extensions#tabline#enabled = 0
@@ -352,8 +356,6 @@ else
     let g:airline#extensions#tabline#fnamemod = ":t"
 end
 
-let g:airline#extensions#tmuxline#enabled = 1
-let airline#extensions#tmuxline#snapshot_file = "~/.tmux.airline.conf"
 
 " ALE - Syntax errors
 "let g:neomake_warning_sign={'text': '!', 'texthl': 'NeomakeErrorMsg'}
@@ -364,7 +366,6 @@ highlight link ALEWarningSign Number
 let g:ale_sign_warning = '!'
 let g:ale_sign_error = '✖'
 let g:ale_sign_column_always = 1
-let g:airline#extensions#ale#enabled = 1
 let g:ale_cursor_detail = 0
 let g:ale_go_golangci_lint_package = 1
 " don't enable all: golangci-lint linters
