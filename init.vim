@@ -215,6 +215,7 @@ Plug 'TroyFletcher/vim-colors-synthwave'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'embark-theme/vim', { 'as': 'embark' }
 Plug 'sainnhe/sonokai'
+Plug 'folke/tokyonight.nvim'
 
 " Ctags support
 "Plug 'manno/vim-tags'
@@ -285,7 +286,7 @@ if $ITERM_PROFILE=="Light Default"
     colorscheme github
 else
     "colorscheme synthwave
-    colorscheme hemisu
+    "colorscheme hemisu
     "colorscheme lucius
     "LuciusBlackHighContrast
     "colorscheme embark
@@ -296,6 +297,7 @@ else
     " let g:sonokai_enable_italic = 1
     " let g:sonokai_disable_italic_comment = 1
     " colorscheme sonokai
+    colorscheme tokyonight
 endif
 
 " ----- Plugin Configurations
@@ -337,7 +339,8 @@ else
     "let g:airline_theme = 'sonokai'
     "let g:airline_theme = 'embark'
     "let g:airline_theme = 'molokai'
-    let g:airline_theme = 'hybrid'
+    "let g:airline_theme = 'hybrid'
+    let g:airline_theme = 'tokyonight'
 endif
 
 let g:airline#extensions#branch#enabled = 0
@@ -464,6 +467,7 @@ autocmd filetype crontab setlocal nobackup nowritebackup
 autocmd FileType c,vim,ruby,yaml,haml,css,html,eruby,coffee,javascript,markdown,sh,python autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " Syntax highlight
+if match(&runtimepath, 'nvim-treesitter') != -1
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -473,3 +477,4 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 EOF
+end
