@@ -126,6 +126,7 @@ nnoremap <A-l> <C-w>l
 
 " Debug
 map   <F6>      :command
+" :so %
 map   <F2>      :n ~/.config/nvim/init.vim<CR>
 " https://github.com/neoclide/coc.nvim/blob/master/data/schema.json
 map   <leader><F2>      :CocConfig<CR>
@@ -222,7 +223,7 @@ Plug 'folke/tokyonight.nvim'
 " Ctags support
 "Plug 'manno/vim-tags'
 "Plug 'majutsushi/tagbar'
-Plug 'ludovicchabant/vim-gutentags'
+"Plug 'ludovicchabant/vim-gutentags'
 
 " Tmux integration
 Plug 'edkolev/tmuxline.vim'
@@ -251,7 +252,9 @@ Plug 'janko-m/vim-test'
 " Open files at line
 Plug 'manno/file-line'
 
-Plug 'zerowidth/vim-copy-as-rtf'
+if has('macunix')
+    Plug 'zerowidth/vim-copy-as-rtf'
+endif
 
 " Polyglot bundles csv.vim and an old version too
 " Instead install separately https://github.com/sheerun/vim-polyglot
@@ -286,6 +289,8 @@ if $ITERM_PROFILE=="Light Default"
     "colorscheme hemisu
     "colorscheme lucius
     colorscheme github
+" elseif !empty($TMUX)
+"     colorscheme hemisu
 else
     "colorscheme synthwave
     "colorscheme hemisu
@@ -299,6 +304,8 @@ else
     " let g:sonokai_enable_italic = 1
     " let g:sonokai_disable_italic_comment = 1
     " colorscheme sonokai
+
+    let g:tokyonight_style = 'night'
     colorscheme tokyonight
 endif
 
