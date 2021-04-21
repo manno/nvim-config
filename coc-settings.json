@@ -1,31 +1,55 @@
 {
-  "coc.preferences.useQuickfixForLocations": true,
-  "coc.preferences.snippets.enable": true,
-  "languageserver": {
-    "golang": {
-      "command": "gopls",
-      "args": [],
-      "rootPatterns": ["go.mod", ".vim/", ".git/", "Session.vim"],
-      "disableWorkspaceFolders": true,
-      "filetypes": ["go"]
-    },
-    "ccls": {
-      "command": "ccls",
-      "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-      "rootPatterns": [".ccls-root", "compile_commands.json"],
-      "initializationOptions": {
-        "cache": {
-          "directory": ".ccls-cache"
+    "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+    "coc.preferences.formatOnType": true,
+    "coc.preferences.formatOnSaveFiletypes": [
+        "go",
+        "json"
+    ],
+    "coc.preferences.snippets.enable": true,
+    "coc.preferences.useQuickfixForLocations": true,
+    "diagnostic.errorSign": "✖",
+    "diagnostic.infoSign": "ℹ",
+    "diagnostic.hintSign": "ℹ",
+    "languageserver": {
+        "golang": {
+            "command": "gopls",
+            "args": [],
+            "rootPatterns": [
+                "go.mod",
+                ".vim/",
+                ".git/",
+                "Session.vim"
+            ],
+            "disableWorkspaceFolders": true,
+            "filetypes": [
+                "go"
+            ],
+            "initializationOptions": {
+                "usePlaceholders": true
+            }
+        },
+        "ccls": {
+            "command": "ccls",
+            "filetypes": [
+                "c",
+                "cpp",
+                "cuda",
+                "objc",
+                "objcpp"
+            ],
+            "rootPatterns": [
+                ".ccls-root",
+                "compile_commands.json"
+            ],
+            "initializationOptions": {
+                "cache": {
+                    "directory": ".ccls-cache"
+                }
+            }
         }
-      }
+    },
+    "go.goplsOptions": {
+        "staticcheck": true,
+        "completeUnimported": true
     }
-  },
-  "coc.preferences.formatOnSaveFiletypes": ["go"],
-  "diagnostic.errorSign": "✖",
-  "diagnostic.infoSign": "ℹ",
-  "diagnostic.hintSign": "ℹ",
-  "go.goplsOptions": {
-    "staticcheck": true,
-    "completeUnimported": true
-  }
 }

@@ -188,9 +188,9 @@ endif
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
-" run CocConfig to add language servers, e.g.
+" run :CocConfig to add language servers, e.g.
+" run :CocCommand go.install.gopls
 "   go get -u golang.org/x/tools/...
-"   https://github.com/saibing/tools
 "   https://github.com/josa42/coc-go#example-configuration
 "   https://github.com/neoclide/coc.nvim/blob/master/data/schema.json
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-go'}
@@ -357,6 +357,7 @@ endif
 
 let g:airline#extensions#branch#enabled = 0
 let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
 
 if match(&runtimepath, 'barbar') != -1
     let g:airline#extensions#tabline#enabled = 0
@@ -368,7 +369,14 @@ else
 end
 
 if match(&runtimepath, 'lualine') != -1
-    lua require('lualine').setup { options = { theme = 'tokyonight' } }
+    lua  <<EOF
+    require('lualine').setup {
+        sections = {
+          lualine_c = {{'filename', full_path = true}, 'b:coc_current_function'}
+        },
+        options = { theme = 'tokyonight' }
+    }
+EOF
 end
 
 " ALE - Syntax errors
@@ -388,8 +396,6 @@ let g:ale_go_golangci_lint_options = ''
 let g:ale_linters = {'go': ['golangci-lint']}
 "let g:ale_linters = {'go': ['gometalinter']}
 "let g:ale_linters = {'go': ['golint', 'gopls']}
-" need to share gopls with ale?
-"g:go_gopls_options=
 
 " vim-go
 "map <leader>f :GoDecls<CR>
