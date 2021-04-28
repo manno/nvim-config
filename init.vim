@@ -256,6 +256,9 @@ if has('macunix')
     Plug 'zerowidth/vim-copy-as-rtf'
 endif
 
+" Markdown preview
+Plug 'davinche/godown-vim', { 'for': 'markdown' }
+
 " Polyglot bundles csv.vim and an old version too
 " Instead install separately https://github.com/sheerun/vim-polyglot
 "Plug 'sheerun/vim-polyglot'
@@ -270,9 +273,9 @@ endif
 " Plug 'othree/html5.vim', { 'for': 'html' }
 " Plug 'mitsuhiko/vim-python-combined', { 'for': 'python' }
 " Plug 'vim-scripts/R.vim', { 'for': 'r' }
-" Plug 'davinche/godown-vim', { 'for': 'markdown' }
 " Plug 'vim-latex/vim-latex', { 'for': 'tex' }
-"
+
+" Parsers, replaces vim-polyglot
 Plug 'nvim-treesitter/nvim-treesitter'
 
 " Git
