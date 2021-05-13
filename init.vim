@@ -17,7 +17,6 @@ set synmaxcol=2048
 "----- Setup document specifics
 filetype on                       " Load filetype.vim
 set hidden                        " Allow hidden buffers
-set backspace=indent,eol,start    " Allow us to backspace before an insert
 set wildignore+=*.o,*.obj,.svn,.git,tags
 
 " Jump to the last position when reopening a file
@@ -52,7 +51,6 @@ if &diff
 endif
 
 "----- Statusline
-set ruler
 set showcmd                 " show the command in the status line
 
 " ----- Spelling
