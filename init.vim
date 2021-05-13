@@ -53,6 +53,21 @@ endif
 "----- Statusline
 set showcmd                 " show the command in the status line
 
+if has('termguicolors')
+    set termguicolors
+endif
+
+if has("nvim-0.5.0")
+  " merge signcolumn and number column into one
+  set signcolumn=number
+end
+
+" don't show quickfix in buffer list
+augroup QFix
+    autocmd!
+    autocmd FileType qf setlocal nobuflisted
+augroup END
+
 " ----- Spelling
 "
 " Rechtschreibung & Word Processing: move cursor in editor lines, not text lines
@@ -121,14 +136,9 @@ nnoremap <A-l> <C-w>l
 map   <F6>      :command
 " :so %
 map   <F2>      :n ~/.config/nvim/init.vim<CR>
-" https://github.com/neoclide/coc.nvim/blob/master/data/schema.json
-map   <leader><F2>      :CocConfig<CR>
 
 " Make
 map !ma       <ESC>:w<CR>:make %<CR>
-
-" Search
-map <leader>G     :Ggrep <C-R><C-W> ':(exclude)*fake*'<CR>
 
 " Forgot to open as root?
 command! Wsudo  :w !sudo tee > /dev/null %
@@ -147,5 +157,31 @@ map  _tt     :source $VIMRUNTIME/syntax/2tex.vim
 " convert to colored ansi
 vmap _ta     :TOansi
 
+" ----- Filetype Specific Settings
+"
+"autocmd FileType csv          set nofoldenable
+"autocmd FileType xml          let g:xml_syntax_folding = 1
+autocmd FileType c            set cindent
+autocmd FileType eruby        map _rw i<%= %>
+autocmd FileType eruby        set number
+"autocmd FileType go           map <F4> :GoImports<CR>
+autocmd FileType go           setlocal noet ts=8 sw=8 sts=8 number
+"autocmd FileType go           set completeopt-=preview
+autocmd FileType java         set foldmethod=manual
+autocmd FileType lua          set ts=4 sw=4 et smartindent foldmethod=syntax
+autocmd FileType nfo          edit ++enc=cp437
+autocmd FileType nfo          silent edit ++enc=cp437
+autocmd FileType ruby         set number foldmethod=manual
+autocmd FileType vim          set ts=4 sw=4
+autocmd FileType xml          set ts=4 sw=4
+autocmd FileType xwt          set foldmethod=syntax
+autocmd FileType zsh          set ts=4 sw=4 et
+autocmd filetype crontab setlocal nobackup nowritebackup
+
+" strip trailing whitespace
+autocmd FileType c,vim,ruby,yaml,haml,css,html,eruby,coffee,javascript,markdown,sh,python autocmd BufWritePre <buffer> :%s/\s\+$//e
+
+" ----- Plugins
+"
 runtime config/plugins.vim
 lua require('manno/plugins')

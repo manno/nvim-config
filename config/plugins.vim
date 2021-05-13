@@ -1,5 +1,3 @@
-" --------------------------------------------------------------------------------
-
 " ----- Plug
 " Auto-install vim-plug
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
@@ -100,9 +98,6 @@ Plug 'airblade/vim-gitgutter'
 call plug#end()
 
 " ----- Colorschemes
-if has('termguicolors')
-    set termguicolors
-endif
 if $ITERM_PROFILE=="Light Default"
     "colorscheme hemisu
     "colorscheme lucius
@@ -128,7 +123,10 @@ else
 endif
 
 " ----- Plugin Configurations
-"
+
+" Search
+map <leader>G     :Ggrep <C-R><C-W> ':(exclude)*fake*'<CR>
+
 
 " vim-test
 nmap <F3> :TestFile<CR>
@@ -168,6 +166,9 @@ EOF
 end
 
 " coc
+" https://github.com/neoclide/coc.nvim/blob/master/data/schema.json
+map   <leader><F2>      :CocConfig<CR>
+
 " Use `[c` and `]c` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -208,17 +209,6 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-
-if has("nvim-0.5.0")
-  " merge signcolumn and number column into one
-  set signcolumn=number
-end
-
-" don't show quickfix in buffer list
-augroup QFix
-    autocmd!
-    autocmd FileType qf setlocal nobuflisted
-augroup END
 
 " ----- fzf
 map <leader>t :GitFiles<CR>
@@ -261,30 +251,6 @@ if $ITERM_PROFILE=="Light Default"
 "else
 "    highlight TabLine ctermbg=black
 endif
-
-" ----- Filetype Specific Settings
-"
-"autocmd FileType csv          set nofoldenable
-"autocmd FileType xml          let g:xml_syntax_folding = 1
-autocmd FileType c            set cindent
-autocmd FileType eruby        map _rw i<%= %>
-autocmd FileType eruby        set number
-"autocmd FileType go           map <F4> :GoImports<CR>
-autocmd FileType go           setlocal noet ts=8 sw=8 sts=8 number
-"autocmd FileType go           set completeopt-=preview
-autocmd FileType java         set foldmethod=manual
-autocmd FileType lua          set ts=4 sw=4 et smartindent foldmethod=syntax
-autocmd FileType nfo          edit ++enc=cp437
-autocmd FileType nfo          silent edit ++enc=cp437
-autocmd FileType ruby         set number foldmethod=manual
-autocmd FileType vim          set ts=4 sw=4
-autocmd FileType xml          set ts=4 sw=4
-autocmd FileType xwt          set foldmethod=syntax
-autocmd FileType zsh          set ts=4 sw=4 et
-autocmd filetype crontab setlocal nobackup nowritebackup
-
-" strip trailing whitespace
-autocmd FileType c,vim,ruby,yaml,haml,css,html,eruby,coffee,javascript,markdown,sh,python autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " Syntax highlight
 if match(&runtimepath, 'nvim-treesitter') != -1
