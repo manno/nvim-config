@@ -1,4 +1,4 @@
-" ----- Colors
+" ----- Mouse
 set mouse=ivh
 
 "----- Setup tabs, use spaces instead of tabs
@@ -11,14 +11,12 @@ set cf                " Enable error files & error jumping.
 set autowrite         " Writes on make/shell commands
 set number            " Show line numbers
 
-"----- speed
-set synmaxcol=512
-"set lazyredraw        " to avoid scrolling problems
+"----- stop highlighting after
+set synmaxcol=2048
 
 "----- Setup document specifics
 filetype on                       " Load filetype.vim
 set hidden                        " Allow hidden buffers
-set noinsertmode                  " Don't don't out in insert mode
 set backspace=indent,eol,start    " Allow us to backspace before an insert
 set wildignore+=*.o,*.obj,.svn,.git,tags
 
@@ -151,6 +149,8 @@ map  _tt     :source $VIMRUNTIME/syntax/2tex.vim
 " convert to colored ansi
 vmap _ta     :TOansi
 
+" --------------------------------------------------------------------------------
+
 " ----- Plug
 " Auto-install vim-plug
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
@@ -211,16 +211,8 @@ Plug 'embark-theme/vim', { 'as': 'embark' }
 Plug 'sainnhe/sonokai'
 Plug 'folke/tokyonight.nvim'
 
-" Ctags support
-"Plug 'manno/vim-tags'
-"Plug 'majutsushi/tagbar'
-"Plug 'ludovicchabant/vim-gutentags'
-
 " Tmux integration
 Plug 'edkolev/tmuxline.vim'
-
-" Remote copy and paste?
-Plug 'fcpg/vim-osc52'
 
 " Readline style insertion
 Plug 'tpope/vim-rsi'
@@ -233,7 +225,6 @@ Plug 'vim-scripts/Align'
 Plug 'machakann/vim-sandwich'
 
 " Vim ruby
-" gem install gem-ctags
 Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 Plug 'tpope/vim-rake', { 'for': 'ruby' }
 "Plug 'fatih/vim-go', { 'for': 'go', 'do': ':silent GoInstallBinaries' }
@@ -249,22 +240,6 @@ endif
 
 " Markdown preview
 Plug 'davinche/godown-vim', { 'for': 'markdown' }
-
-" Polyglot bundles csv.vim and an old version too
-" Instead install separately https://github.com/sheerun/vim-polyglot
-"Plug 'sheerun/vim-polyglot'
-
-" Plug 'stephpy/vim-yaml', { 'for': 'yaml' }
-" Plug 'tpope/vim-git', { 'for': 'git' }
-" Plug 'tpope/vim-haml', { 'for': 'haml' }
-" Plug 'tpope/vim-markdown', { 'for': 'markdown' }
-" Plug 'sheerun/yajs.vim', { 'for': 'javascript' }
-" Plug 'honza/dockerfile.vim', { 'for': 'docker' }
-" Plug 'JulesWang/css.vim', { 'for': 'css' }
-" Plug 'othree/html5.vim', { 'for': 'html' }
-" Plug 'mitsuhiko/vim-python-combined', { 'for': 'python' }
-" Plug 'vim-scripts/R.vim', { 'for': 'r' }
-" Plug 'vim-latex/vim-latex', { 'for': 'tex' }
 
 " Parsers, replaces vim-polyglot
 Plug 'nvim-treesitter/nvim-treesitter'
@@ -306,12 +281,6 @@ endif
 " ----- Plugin Configurations
 "
 
-" osc52 copy and paste
-xmap <leader>y y:call SendViaOSC52(getreg('"'))<cr>
-
-" vim-go
-"map <leader>f :GoDecls<CR>
-
 " vim-test
 nmap <F3> :TestFile<CR>
 let test#strategy = "neovim"
@@ -319,14 +288,6 @@ let test#strategy = "neovim"
 " fugitive git grep
 autocmd QuickFixCmdPost *grep* cwindow
 set diffopt+=vertical
-
-" gutentags
-let g:gutentags_cache_dir = $HOME . '/.cache/gutentags'
-" let g:gutentags_file_list_command = {
-"     \ 'markers': {
-"         \ '.git': 'git ls-files',
-"         \ },
-"     \ }
 
 " NERDCommenter
 let NERDSpaceDelims = 1
