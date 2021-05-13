@@ -107,9 +107,6 @@ nnoremap <C-p>   :bp<CR>
 nnoremap <leader>n   :tabnext<CR>
 nnoremap <leader>p   :tabprev<CR>
 
-" Quit all buffers - qa/wa
-command! Q      :quitall
-
 " Close current buffer
 nnoremap <leader>w       :bw<CR>
 nnoremap <leader>D       :%bd!<CR>
@@ -179,15 +176,14 @@ if has('nvim-0.5.0')
     " Plug 'romgrk/barbar.nvim'
     Plug 'akinsho/nvim-bufferline.lua'
     Plug 'hoob3rt/lualine.nvim'
-else
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
+    Plug 'folke/lsp-trouble.nvim'
 endif
 
 " Open files
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
+" Languageservers
 " run :CocConfig to add language servers, e.g.
 " run :CocCommand go.install.gopls
 "   go get -u golang.org/x/tools/...
@@ -201,11 +197,6 @@ let g:coc_global_extensions=['coc-json',
                            \ 'coc-go',
                            \ 'coc-clangd',
                            \ 'coc-yaml' ]
-
-" Syntax errors
-"Plug 'scrooloose/syntastic'
-"Plug 'benekastah/neomake'
-Plug 'w0rp/ale'
 
 " Colorschemes
 Plug 'jonathanfilip/vim-lucius'
@@ -340,83 +331,78 @@ let g:gutentags_cache_dir = $HOME . '/.cache/gutentags'
 " NERDCommenter
 let NERDSpaceDelims = 1
 
-" airline
-let g:airline_powerline_fonts = 1
-"let g:airline_theme='lucius'
-"let g:airline_theme='kolor'
-
-let g:airline#extensions#tmuxline#enabled = 1
-let airline#extensions#tmuxline#snapshot_file = "~/.tmux.airline.conf"
-
-if $ITERM_PROFILE=="Light Default"
-    let g:airline_theme = 'github'
-else
-    "let g:airline_theme = 'sonokai'
-    "let g:airline_theme = 'embark'
-    "let g:airline_theme = 'molokai'
-    "let g:airline_theme = 'hybrid'
-    let g:airline_theme = 'tokyonight'
-endif
-
-let g:airline#extensions#branch#enabled = 0
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
-
-if match(&runtimepath, 'barbar') != -1
-    let g:airline#extensions#tabline#enabled = 0
-elseif match(&runtimepath, 'nvim-bufferline') != -1
+if match(&runtimepath, 'nvim-bufferline') != -1
     lua require'bufferline'.setup{}
-else
-    let g:airline#extensions#tabline#enabled = 1
-    let g:airline#extensions#tabline#fnamemod = ":t"
+end
+
+if match(&runtimepath, 'trouble') != -1
+lua <<EOF
+  require("trouble").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
+EOF
 end
 
 if match(&runtimepath, 'lualine') != -1
     lua  <<EOF
     require('lualine').setup {
         sections = {
-          lualine_c = {{'filename', full_path = true}, 'b:coc_current_function'}
+          lualine_c = {{'filename', path = 2}, 'b:coc_current_function'},
+          lualine_y = { 'progress', 'coc#status'}
         },
         options = { theme = 'tokyonight' }
     }
 EOF
 end
 
-" ALE - Syntax errors
-"let g:neomake_warning_sign={'text': '!', 'texthl': 'NeomakeErrorMsg'}
-" test highlights:
-" :so $VIMRUNTIME/syntax/hitest.vim
-highlight link ALEErrorSign Number
-highlight link ALEWarningSign Number
-let g:ale_sign_warning = '!'
-let g:ale_sign_error = '✖'
-let g:ale_sign_column_always = 1
-let g:ale_cursor_detail = 0
-let g:ale_go_golangci_lint_package = 1
-" don't enable all: golangci-lint linters
-let g:ale_go_golangci_lint_options = ''
-"let g:ale_linters = {'go': []}
-let g:ale_linters = {'go': ['golangci-lint']}
-"let g:ale_linters = {'go': ['gometalinter']}
-"let g:ale_linters = {'go': ['golint', 'gopls']}
-
-" vim-go
-"map <leader>f :GoDecls<CR>
-"let g:go_code_completion_enabled = 0
-"let g:go_fmt_command = 'goimports'
-
 " coc
 " Use `[c` and `]c` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
-nmap <silent> ]f <Plug>(coc-fix-current)
 nmap <silent> ]d <Plug>(coc-definitions)
-nmap <silent> ]n :ALENext<CR>
-nmap <silent> K  :call CocAction('doHover')<CR>
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+nmap <silent> ]f <Plug>(coc-fix-current)
+nmap <leader>rn <Plug>(coc-rename)
+
+nmap <silent> K  :call CocActionAsync('doHover')<CR>
+
 autocmd FileType c,cpp,go nmap <silent> gd <Plug>(coc-declaration)
 autocmd FileType go nmap <silent> <C-]> <Plug>(coc-definition)
-nmap <silent> gr <Plug>(coc-references)
-nmap <leader>lr <Plug>(coc-rename)
+autocmd FileType go nmap gtj :CocCommand go.tags.add json<cr>
+autocmd FileType go nmap gty :CocCommand go.tags.add yaml<cr>
+autocmd FileType go nmap gtx :CocCommand go.tags.clear<cr>
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+if has("nvim-0.5.0")
+  " merge signcolumn and number column into one
+  set signcolumn=number
+end
 
 " don't show quickfix in buffer list
 augroup QFix
