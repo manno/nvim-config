@@ -184,4 +184,4 @@ autocmd FileType c,vim,ruby,yaml,haml,css,html,eruby,coffee,javascript,markdown,
 " ----- Plugins
 "
 runtime config/plugins.vim
-lua require('manno/plugins')
+"lua require('manno/plugins')

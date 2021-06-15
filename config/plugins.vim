@@ -23,7 +23,7 @@ if has('nvim-0.5.0')
     " Plug 'romgrk/barbar.nvim'
     Plug 'akinsho/nvim-bufferline.lua'
     Plug 'hoob3rt/lualine.nvim'
-    Plug 'folke/lsp-trouble.nvim'
+    "Plug 'folke/trouble.nvim'
 endif
 
 " Open files
@@ -151,6 +151,8 @@ lua <<EOF
     -- refer to the configuration section below
   }
 EOF
+" how is that different from CocList diagnostics
+nnoremap <silent><nowait> <space>a  <cmd>TroubleToggle lsp_workspace_diagnostics<cr>
 end
 
 if match(&runtimepath, 'lualine') != -1
@@ -183,10 +185,13 @@ nmap <silent> gr <Plug>(coc-references)
 
 nmap <silent> ]f <Plug>(coc-fix-current)
 nmap <leader>rn <Plug>(coc-rename)
+" \aw \aap \a%
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 nmap <silent> K  :call CocActionAsync('doHover')<CR>
 
-autocmd FileType c,cpp,go nmap <silent> gd <Plug>(coc-declaration)
+autocmd FileType c,cpp nmap <silent> gd <Plug>(coc-declaration)
 autocmd FileType go nmap <silent> <C-]> <Plug>(coc-definition)
 autocmd FileType go nmap gtj :CocCommand go.tags.add json<cr>
 autocmd FileType go nmap gty :CocCommand go.tags.add yaml<cr>
@@ -194,13 +199,15 @@ autocmd FileType go nmap gtx :CocCommand go.tags.clear<cr>
 
 " Mappings for CoCList
 " Show all diagnostics.
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
-" Show commands.
-nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent><nowait> <space>d  :<C-u>CocList diagnostics<cr>
 " Find symbol of current document.
 nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+
 " Search workspace symbols.
 nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
